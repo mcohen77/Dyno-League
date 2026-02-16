@@ -1,4 +1,4 @@
-const APPS_SCRIPT_WEB_APP_URL = "https://script.google.com/u/0/home/projects/1yRCzOHp_zjzGTGP9NYC_5bNxO2CiHdrap1l3L16DFgvoYL2w63f4nGCu/edit";
+const APPS_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyPk1Te_pKfnmlxOJHUUuQ53aRpJOHbuKFoIb53rIPwfCyptDFQDp74uQGcR8Cet1TIXA/exec";
 
 const roastReplies = [
   "Get the hell out of here with that chaos-tier suggestion.",
@@ -29,7 +29,14 @@ function renderResponse(roast, ok) {
 }
 
 async function submitToSheet(teamName, suggestion) {
-  if (!APPS_SCRIPT_WEB_APP_URL || APPS_SCRIPT_WEB_APP_URL.includes("PASTE_")) {
+  const looksLikeWebAppEndpoint =
+    APPS_SCRIPT_WEB_APP_URL.includes("/macros/s/") && APPS_SCRIPT_WEB_APP_URL.endsWith("/exec");
+
+  if (
+    !APPS_SCRIPT_WEB_APP_URL ||
+    APPS_SCRIPT_WEB_APP_URL.includes("PASTE_") ||
+    !looksLikeWebAppEndpoint
+  ) {
     return false;
   }
 
