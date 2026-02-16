@@ -40,19 +40,17 @@ async function submitToSheet(teamName, suggestion) {
     return false;
   }
 
-  const payload = {
+  const submittedAt = new Date().toISOString();
+  const params = new URLSearchParams({
     teamName,
     suggestion,
-    submittedAt: new Date().toISOString()
-  };
+    submittedAt
+  });
+  const url = `${APPS_SCRIPT_WEB_APP_URL}?${params.toString()}`;
 
-  await fetch(APPS_SCRIPT_WEB_APP_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify(payload)
+  await fetch(url, {
+    method: "GET",
+    mode: "no-cors"
   });
 
   return true;
